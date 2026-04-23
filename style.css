@@ -6,7 +6,7 @@ body {
 p {
     font-family: 'Times New Roman', Times, serif;
     font-style: italic;
-    font-size: 18px;
+    font-size: 15px;
     color: #880303;
     z-index: 101; /* Must be higher than 100 */
     top: 20px;
@@ -17,7 +17,6 @@ p {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
 }
 
 .inside-water-bottle {
