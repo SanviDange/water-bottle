@@ -1,0 +1,122 @@
+body {
+  height: 500vh;
+  margin: 0;
+}
+
+.inside-water-bottle {
+  position: fixed;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+    z-index: -1;
+    background-image: url('image/inside-bottle.png');
+      top: 0;
+  left: 0;
+  width: 100vw;
+  height: 500vh;
+}
+
+/* ---Water--- */
+.still-water {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  overflow: hidden;
+  transition: height 0.9s ease;
+   height: calc(var(--fill, 92) * 1vh);
+   background: linear-gradient(
+    180deg,
+    rgba(100,200,240,0.6) 0%,
+    rgba(13, 95, 139, 0.85) 50%,
+    rgba(4, 56, 101, 0.95) 100%
+  );
+  backdrop-filter: blur(2px);
+  opacity: 0.5;
+}
+
+.Wave {
+  width: 200%;
+  flex-shrink: 0;
+  display: block;
+  animation-name: swell;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  fill: #4fc2f7db;
+  overflow: hidden;
+  transition: height 0.9s ease;
+  height: calc(var(--fill, 100) * 1vh);
+  opacity: 0.8;
+
+}
+
+@keyframes swell {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ---Cap--- */
+.starting {
+  height: 100vh;
+  margin: 0;
+}
+
+.entry {
+  position: fixed;
+  inset: 0;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: opacity 0.8s ease;
+}
+
+.cap-outside {
+  width: 60vw;
+  height: 60vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: #B62828; /* Main Red */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.574);
+  
+}
+
+.cap-outsidebigger {
+   width: 65vw;
+  height: 65vw;
+  max-width: 650px;
+  max-height: 650px;
+  background: #B62828; /* Main Red */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+
+.cap-inner {
+  width: 300px;
+  height: 300px;
+  background: #9A1B1B; /* Darkest Red */
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+  cursor: grab;
+  user-select: none;
+  /* Add a tiny line so you can see it spinning */
+  outline: 10px dashed #9A1B1B;
+}
+
+.hint {
+  margin-top: 20px;
+  color: #A32626;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
