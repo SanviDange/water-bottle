@@ -3,9 +3,7 @@
 // ----------------------
 const cap = document.getElementById('cap');
 const entry = document.getElementById('entry');
-
 const capSound = document.getElementById('capSound');
-const drinkSound = document.getElementById('drinkSound');
 
 let audioUnlocked = false;
 
@@ -15,16 +13,9 @@ let audioUnlocked = false;
 function unlockAudio() {
   if (audioUnlocked) return;
 
-  Promise.all([
-    capSound.play().catch(() => {}),
-    drinkSound.play().catch(() => {})
-  ]).then(() => {
+  capSound.play().catch(() => {}).then(() => {
     capSound.pause();
     capSound.currentTime = 0;
-
-    drinkSound.pause();
-    drinkSound.currentTime = 0;
-
     audioUnlocked = true;
   });
 }
@@ -38,8 +29,8 @@ document.addEventListener('touchstart', unlockAudio, { once: true });
 let isDragging = false;
 let startX = 0;
 let totalRotation = 0;
-let capSoundPlaying = false;       // NEW: track if sound is actively playing
-let capSoundStopTimer = null;      // NEW: debounce timer to pause on stillness
+let capSoundPlaying = false;
+let capSoundStopTimer = null;
 
 cap.addEventListener('mousedown', (e) => {
   isDragging = true;
@@ -56,25 +47,20 @@ window.addEventListener('mousemove', (e) => {
 
   cap.style.transform = `rotate(${totalRotation}deg)`;
 
-  // 🔊 cap sound — continuous during turn, pauses only when still
   if (audioUnlocked) {
     const speed = Math.abs(diff);
 
     if (speed > 1) {
-      // Clear any pending stop
       clearTimeout(capSoundStopTimer);
 
-      // Adjust volume to twist speed
       capSound.volume = Math.min(speed / 20, 1);
+      capSound.loop = true;
 
-      // Only (re)start if not already playing — let it run continuously
-      if (!capSoundPlaying) {
-        capSound.loop = true;
+      if (capSound.paused) {
         capSound.play().catch(() => {});
-        capSoundPlaying = true;
       }
+      capSoundPlaying = true;
 
-      // Schedule a pause shortly after movement stops
       capSoundStopTimer = setTimeout(() => {
         capSound.pause();
         capSoundPlaying = false;
@@ -82,7 +68,7 @@ window.addEventListener('mousemove', (e) => {
     }
   }
 
-  if (totalRotation > 1080) {
+  if (totalRotation > 720) {
     openBottle();
   }
 });
@@ -91,7 +77,6 @@ window.addEventListener('mouseup', () => {
   isDragging = false;
   cap.style.cursor = 'grab';
 
-  // Stop sound immediately on release
   clearTimeout(capSoundStopTimer);
   capSound.pause();
   capSoundPlaying = false;
